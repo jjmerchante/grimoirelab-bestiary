@@ -35,6 +35,7 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install -vvv
+        poetry add -D coveralls
     - name: Set MySQL mode
       env:
         DB_HOST: 127.0.0.1
@@ -44,10 +45,12 @@ jobs:
     - name: Lint with flake8
       run: |
         poetry run flake8
-    - name: Tests
+    - name: Tests and coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        poetry run python manage.py test --settings=config.settings.testing
-
+        poetry run coverage run --source='bestiary' manage.py test --settings=config.settings.testing
+        poetry run coveralls --service=github
   frontend:
 
     strategy:
