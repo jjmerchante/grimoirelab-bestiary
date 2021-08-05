@@ -1,14 +1,6 @@
 name: tests
 
-on:
-  push:
-    branches:
-      - unicorn
-    tags:
-      - '!**'
-  pull_request:
-    branches:
-      - unicorn
+on: [push]
 
 jobs:
 
